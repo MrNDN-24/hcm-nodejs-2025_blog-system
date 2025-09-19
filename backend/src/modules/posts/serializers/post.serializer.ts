@@ -27,11 +27,11 @@ export class PostSerializer {
 
   @ApiProperty()
   @Expose()
-  created_at: Date;
+  createdAt: Date;
 
   @ApiProperty()
   @Expose()
-  updated_at: Date;
+  updatedAt: Date;
 
   // Relations
   @ApiProperty({ type: CategorySerializer })

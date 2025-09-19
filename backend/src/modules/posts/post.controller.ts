@@ -10,6 +10,7 @@ import {
   Delete,
   Param,
   Put,
+  Query,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -20,6 +21,7 @@ import { ApiTags, ApiBody } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MessageResponseDto } from '@/common/response/response_message';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { FilterPostDto } from './dto/filter-post.dto';
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -64,5 +66,11 @@ export class PostController {
     @UploadedFile() file?: Express.Multer.File,
   ): Promise<PostSerializer> {
     return this.postService.updatePost(id, dto, file);
+  }
+
+  @Get("postUser")
+  @ApiResponseData(PostSerializer, true)
+  async getAllPosts(@Query() filter: FilterPostDto): Promise<PostSerializer[]> {
+    return this.postService.getAllPosts(filter);
   }
 }

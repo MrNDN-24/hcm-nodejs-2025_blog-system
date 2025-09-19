@@ -164,6 +164,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/posts/postUser": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PostController_getAllPosts_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/categories/list": {
         parameters: {
             query?: never;
@@ -228,22 +244,6 @@ export interface paths {
         patch: operations["AdminController_updateApproval_v1"];
         trace?: never;
     };
-    "/v1/admin/listPost": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["AdminController_getAllPosts_v1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/v1/admin/approvalPost/{id}": {
         parameters: {
             query?: never;
@@ -268,6 +268,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["AdminController_getAllListAuthors_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/listPost": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AdminController_getAllPosts_v1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -398,9 +414,9 @@ export interface components {
             status: string;
             imageUrl: string;
             /** Format: date-time */
-            created_at: string;
+            createdAt: string;
             /** Format: date-time */
-            updated_at: string;
+            updatedAt: string;
             category: components["schemas"]["CategorySerializer"];
             tags: components["schemas"]["TagSerializer"][];
             author: components["schemas"]["AuthorSerializer"];
@@ -700,6 +716,33 @@ export interface operations {
             };
         };
     };
+    PostController_getAllPosts_v1: {
+        parameters: {
+            query: {
+                title: string;
+                authorName: string;
+                status: string;
+                categoryName: string;
+                tagName: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ResponseData"] & {
+                        data?: components["schemas"]["PostSerializer"][];
+                    };
+                };
+            };
+        };
+    };
     CategoryController_getAllCategories_v1: {
         parameters: {
             query?: never;
@@ -790,33 +833,6 @@ export interface operations {
             };
         };
     };
-    AdminController_getAllPosts_v1: {
-        parameters: {
-            query: {
-                title: string;
-                authorName: string;
-                status: string;
-                categoryName: string;
-                tagName: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ResponseData"] & {
-                        data?: components["schemas"]["PostSerializer"][];
-                    };
-                };
-            };
-        };
-    };
     AdminController_approvePost_v1: {
         parameters: {
             query?: never;
@@ -860,6 +876,33 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ResponseData"] & {
                         data?: components["schemas"]["AuthorSerializer"][];
+                    };
+                };
+            };
+        };
+    };
+    AdminController_getAllPosts_v1: {
+        parameters: {
+            query: {
+                title: string;
+                authorName: string;
+                status: string;
+                categoryName: string;
+                tagName: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ResponseData"] & {
+                        data?: components["schemas"]["PostSerializer"][];
                     };
                 };
             };

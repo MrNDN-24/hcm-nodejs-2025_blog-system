@@ -6,7 +6,7 @@ import {
   createPost,
   softDeletePost,
   updatePost as updatePostAPI,
-} from "../services/authorPostService";
+} from "../services/postService";
 import type {
   PostSerializer,
   TagSerializer,

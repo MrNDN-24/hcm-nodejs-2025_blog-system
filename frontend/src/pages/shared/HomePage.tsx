@@ -21,61 +21,22 @@ import {
 } from "@ant-design/icons";
 import "../../styles/HomePage.css";
 import { useTranslation } from "react-i18next";
+import { usePosts } from "../../hooks/useAuthorPost";
+import { useUserPost } from "../../hooks/useUserPost";
+import { useEffect } from "react";
 
 const { Title, Paragraph, Text } = Typography;
 const { Search } = Input;
 
 const HomePage = () => {
   const { t } = useTranslation("home");
+  const { loadUserPosts, posts } = useUserPost();
+  const { loadTagsAndCategories, categories } = usePosts();
 
-  // Dữ liệu mẫu (không cần đa ngôn ngữ)
-  const categories = [
-    { name: "Marketing", count: 128, color: "#f50" },
-    { name: "SEO", count: 76, color: "#2db7f5" },
-    { name: "Công nghệ", count: 95, color: "#87d068" },
-    { name: "Viết lách", count: 64, color: "#108ee9" },
-    { name: "Design", count: 42, color: "#ff85c0" },
-    { name: "Kinh doanh", count: 58, color: "#722ed1" },
-  ];
-
-  const recentPosts = [
-    {
-      title: "Cách tối ưu hóa bài viết cho featured snippet",
-      excerpt: "Hướng dẫn chi tiết cách tối ưu bài viết để xuất hiện trong featured snippet của Google...",
-      date: "12/12/2023",
-      author: "Nguyễn Văn A",
-      category: "SEO",
-      readTime: "7 phút",
-      image: "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      title: "Tương lai của AI trong content creation",
-      excerpt: "Phân tích về cách AI đang thay đổi ngành sáng tạo nội dung và những điều cần lưu ý...",
-      date: "10/12/2023",
-      author: "Trần Thị B",
-      category: "Công nghệ",
-      readTime: "9 phút",
-      image: "https://d24rsy7fvs79n4.cloudfront.net/atd.ueh.edu.vn/20250126142515_5898_1737876315.3471.jpeg",
-    },
-    {
-      title: "Case study: Chiến dịch content viral triệu view",
-      excerpt: "Phân tích chiến dịch content viral đạt triệu view và bài học cho marketer...",
-      date: "05/12/2023",
-      author: "Lê Văn C",
-      category: "Marketing",
-      readTime: "11 phút",
-      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      title: "Cách xây dựng content pillar cho website",
-      excerpt: "Hướng dẫn từng bước xây dựng hệ thống content pillar để tăng traffic cho website...",
-      date: "03/12/2023",
-      author: "Phạm Thị D",
-      category: "Content Strategy",
-      readTime: "8 phút",
-      image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=500&q=60",
-    },
-  ];
+  useEffect(() => {
+    loadTagsAndCategories();
+    loadUserPosts();
+  }, [loadTagsAndCategories, loadUserPosts]);
 
   return (
     <div className="home-container">
@@ -83,7 +44,8 @@ const HomePage = () => {
       <section className="hero-section">
         <div className="hero-content">
           <Title className="hero-title">
-            <span className="gradient-text">Blog System</span> - {t("hero.title")}
+            <span className="gradient-text">Blog System</span> -{" "}
+            {t("hero.title")}
           </Title>
           <Paragraph className="hero-description">
             {t("hero.description")}
@@ -142,24 +104,35 @@ const HomePage = () => {
         </Paragraph>
 
         <div className="categories-grid">
-          {categories.map((category, index) => (
-            <Card
-              key={index}
-              hoverable
-              className="category-card"
-              actions={[<ArrowRightOutlined />]}
-            >
-              <div className="category-icon">
-                <BookOutlined style={{ fontSize: "32px", color: category.color }} />
-              </div>
-              <Title level={4} className="category-name">
-                {category.name}
-              </Title>
-              <Text type="secondary" className="category-count">
-                {category.count} {t("categories.postsCount")}
-              </Text>
-            </Card>
-          ))}
+          {categories.map((category, index) => {
+            const colors = [
+              "#f50",
+              "#2db7f5",
+              "#87d068",
+              "#108ee9",
+              "#ff85c0",
+              "#722ed1",
+              "#fa8c16",
+              "#13c2c2",
+            ];
+            const color = colors[index % colors.length];
+
+            return (
+              <Card
+                key={index}
+                hoverable
+                className="category-card"
+                actions={[<ArrowRightOutlined />]}
+              >
+                <div className="category-icon">
+                  <BookOutlined style={{ fontSize: "22px", color }} />
+                </div>
+                <Title level={4} className="category-name">
+                  {category.name}
+                </Title>
+              </Card>
+            );
+          })}
         </div>
       </section>
 
@@ -175,50 +148,73 @@ const HomePage = () => {
         </Paragraph>
 
         <Row gutter={[24, 24]}>
-          {recentPosts.map((post, index) => (
-            <Col xs={24} sm={12} lg={6} key={index}>
-              <Card
-                className="recent-post-card"
-                hoverable
-                cover={
-                  <div className="post-image-container">
-                    <img alt={post.title} src={post.image} />
-                    <Tag color="blue" className="post-category-tag">
-                      {post.category}
-                    </Tag>
-                  </div>
-                }
-              >
-                <div className="post-content">
-                  <Title level={4} className="post-title">{post.title}</Title>
-                  <Paragraph ellipsis={{ rows: 3 }} className="post-excerpt">
-                    {post.excerpt}
-                  </Paragraph>
+          {posts
+            .sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            )
+            .slice(0, 4) // Lấy đúng 4 bài mới nhất
+            .map((post) => {
+              const excerpt = post.content
+                .replace(/<[^>]+>/g, "")
+                .slice(0, 150);
+              const readTime =
+                Math.ceil(post.content.replace(/<[^>]+>/g, "").length / 200) +
+                " phút";
 
-                  <div className="post-meta">
-                    <Space size="small">
-                      <Avatar size="small" icon={<UserOutlined />} />
-                      <Text>{post.author}</Text>
-                    </Space>
-                    <Space size="small" className="post-date">
-                      <CalendarOutlined />
-                      <Text type="secondary">{post.date}</Text>
-                    </Space>
-                  </div>
+              return (
+                <Col xs={24} sm={12} lg={6} key={post.id}>
+                  <Card
+                    className="recent-post-card"
+                    hoverable
+                    cover={
+                      <div className="post-image-container">
+                        <img alt={post.title} src={post.imageUrl} />
+                        <Tag color="blue" className="post-category-tag">
+                          {post.category?.name}
+                        </Tag>
+                      </div>
+                    }
+                  >
+                    <div className="post-content">
+                      <Title level={4} className="post-title">
+                        {post.title}
+                      </Title>
+                      <Paragraph
+                        ellipsis={{ rows: 3 }}
+                        className="post-excerpt"
+                      >
+                        {excerpt}
+                      </Paragraph>
 
-                  <div className="post-footer">
-                    <Space size="small">
-                      <ClockCircleOutlined />
-                      <Text type="secondary">{post.readTime}</Text>
-                    </Space>
-                    <Button type="link" size="small">
-                      {t("recentPosts.readMore")} <ArrowRightOutlined />
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </Col>
-          ))}
+                      <div className="post-meta">
+                        <Space size="small">
+                          <Avatar size="small" icon={<UserOutlined />} />
+                          <Text>{post.author?.penName}</Text>
+                        </Space>
+                        <Space size="small" className="post-date">
+                          <CalendarOutlined />
+                          <Text type="secondary">
+                            {new Date(post.createdAt).toLocaleDateString()}
+                          </Text>
+                        </Space>
+                      </div>
+
+                      <div className="post-footer">
+                        <Space size="small">
+                          <ClockCircleOutlined />
+                          <Text type="secondary">{readTime}</Text>
+                        </Space>
+                        <Button type="link" size="small">
+                          {t("recentPosts.readMore")} <ArrowRightOutlined />
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+                </Col>
+              );
+            })}
         </Row>
 
         <div className="view-all-container">

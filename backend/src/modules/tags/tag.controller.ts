@@ -6,7 +6,6 @@ import { TagSerializer } from '../tags/serializers/tag.serializer';
 import { TagService } from './tag.service';
 
 @ApiTags('Tags')
-@UseGuards(JwtAuthGuard)
 @Controller('tags')
 export class TagController {
   constructor(private readonly tagService: TagService) {}

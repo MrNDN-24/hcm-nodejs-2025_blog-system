@@ -21,6 +21,7 @@ import { AuthorService } from '../authors/author.service';
 import { CategoryService } from '../categories/category.service';
 import { TagService } from '../tags/tag.service';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { FilterPostDto } from './dto/filter-post.dto';
 
 @Injectable()
 export class PostService extends BaseI18nService {
@@ -279,6 +280,52 @@ export class PostService extends BaseI18nService {
       );
     } finally {
       await queryRunner.release();
+    }
+  }
+
+  async getAllPosts(filter: FilterPostDto): Promise<PostSerializer[]> {
+    try {
+      const query = this.postRepo
+        .createQueryBuilder('post')
+        .leftJoinAndSelect('post.author', 'author')
+        .leftJoinAndSelect('post.category', 'category')
+        .leftJoinAndSelect('post.tags', 'tags')
+        .where('post.deletedAt IS NULL')
+        .andWhere('post.status = :status', { status: 'approved' }) // user chỉ xem được bài đã approve
+        .orderBy('post.createdAt', 'DESC');
+
+      if (filter.title) {
+        query.andWhere('post.title LIKE :title', {
+          title: `%${filter.title}%`,
+        });
+      }
+
+      if (filter.authorName) {
+        query.andWhere('author.penName LIKE :authorName', {
+          authorName: `%${filter.authorName}%`,
+        });
+      }
+
+      if (filter.categoryName) {
+        query.andWhere('category.name LIKE :categoryName', {
+          categoryName: `%${filter.categoryName}%`,
+        });
+      }
+
+      if (filter.tagName) {
+        query.andWhere('tags.name LIKE :tagName', {
+          tagName: `%${filter.tagName}%`,
+        });
+      }
+
+      const posts = await query.getMany();
+
+      return plainToInstance(PostSerializer, posts, {
+        excludeExtraneousValues: true,
+      });
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException(await this.t('post.fetch_failed'));
     }
   }
 }

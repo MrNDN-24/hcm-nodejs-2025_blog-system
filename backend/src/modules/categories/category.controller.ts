@@ -6,7 +6,6 @@ import { CategorySerializer } from '../categories/serializers/category.serialize
 import { CategoryService } from './category.service';
 
 @ApiTags('Categories')
-@UseGuards(JwtAuthGuard)
 @Controller('categories')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}

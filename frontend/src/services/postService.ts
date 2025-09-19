@@ -4,9 +4,10 @@ import type {
   CreatePostFormData,
   UpdatePostFormData,
 } from "../types/authorPost.type";
+import type { FilterPostDto } from "../types/admin.type";
 import { ENDPOINTS } from "../constants/apiEndpoints";
 
-// List tags/categories/posts
+// ===== Author Post Actions =====
 export const getListTags = async () => {
   try {
     const res = await api.get(ENDPOINTS.TAGS.LIST);
@@ -97,5 +98,15 @@ export const softDeletePost = async (postId: number) => {
     return res.data;
   } catch (err) {
     throw handleAxiosError(err, "post.delete_failed");
+  }
+};
+
+// ===== User Post =====
+export const getPostUser = async (filter?: FilterPostDto) => {
+  try {
+    const res = await api.get(ENDPOINTS.POSTS.USER_LIST, { params: filter });
+    return res.data.data;
+  } catch (err) {
+    throw handleAxiosError(err, "post.fetch_all_failed");
   }
 };

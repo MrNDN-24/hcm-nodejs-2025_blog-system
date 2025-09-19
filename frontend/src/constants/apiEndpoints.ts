@@ -15,6 +15,7 @@ export const ENDPOINTS = {
     UPDATE: (postId: number) => `/v1/posts/update/${postId}`,
     SOFT_DELETE: (postId: number) => `/v1/posts/softDelete/${postId}`,
     AUTHOR_LIST: "/v1/posts/authorPost",
+    USER_LIST: "/v1/posts/postUser"
   },
   TAGS: {
     LIST: "/v1/tags/list",
