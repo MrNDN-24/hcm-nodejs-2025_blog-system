@@ -29,6 +29,7 @@ import { TagModule } from './modules/tags/tag.module';
 import { CategoryModule } from './modules/categories/category.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { FollowersModule } from './modules/followers/follower.module';
+import { NotificationModule } from './modules/notifications/notify.module';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { FollowersModule } from './modules/followers/follower.module';
     CategoryModule,
     AdminModule,
     FollowersModule,
+    NotificationModule
   ],
   controllers: [AppController],
   providers: [

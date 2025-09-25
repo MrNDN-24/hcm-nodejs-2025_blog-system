@@ -19,6 +19,9 @@ import { PostStatus } from '../posts/entities/post.entity';
 import { plainToInstance } from 'class-transformer';
 import { PostSerializer } from '../posts/serializers/post.serializer';
 import { FilterPostDto } from '../posts/dto/filter-post.dto';
+import { FollowersService } from '../followers/follower.service';
+import { Notification } from '../notifications/entities/notify.entity';
+import { NotifyGateway } from '../notifications/notify.gateway';
 
 @Injectable()
 export class AdminService extends BaseI18nService {
@@ -29,6 +32,10 @@ export class AdminService extends BaseI18nService {
     private readonly postRepo: Repository<Post>,
     i18n: I18nService,
     context: RequestI18nContextService,
+    private readonly followersService: FollowersService,
+    @InjectRepository(Notification)
+    private readonly notificationRepo: Repository<Notification>,
+    private readonly notifyGateway: NotifyGateway,
   ) {
     super(i18n, context);
   }
@@ -88,7 +95,7 @@ export class AdminService extends BaseI18nService {
     try {
       const post = await this.postRepo.findOne({
         where: { id: postId, deletedAt: IsNull(), status: PostStatus.PENDING },
-        relations: ['author', 'category', 'tags'],
+        relations: ['author', 'author.user', 'category', 'tags'],
       });
 
       if (!post) {
@@ -110,6 +117,34 @@ export class AdminService extends BaseI18nService {
       }
 
       await this.postRepo.save(post);
+
+      if (dto.status === PostStatus.APPROVED) {
+        // Lấy danh sách follower
+        const followers = await this.followersService.getFollowersByAuthor(
+          post.author.id,
+        );
+
+        const notifications = followers.map((f) => {
+          // Tạo message trực tiếp
+          const message = `Tác giả ${post.author.penName} vừa đăng một bài viết mới: "${post.title}"`;
+
+          return this.notificationRepo.create({
+            user: f.user,
+            post: post,
+            message,
+          });
+        });
+
+        const savedNotifs = await this.notificationRepo.save(notifications);
+        // Phát realtime qua socket
+        savedNotifs.forEach((notif) => {
+          this.notifyGateway.sendNotification(notif.user.id, {
+            id: notif.id,
+            message: notif.message,
+            postId: post.id,
+          });
+        });
+      }
 
       return {
         message:

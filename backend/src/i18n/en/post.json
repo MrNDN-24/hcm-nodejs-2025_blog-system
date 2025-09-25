@@ -14,5 +14,6 @@
   "update_failed": "Failed to update post",
   "approval_success": "Post approved successfully",
   "reject_success": "Post rejected successfully",
-  "reject_reason_required": "You must provide a reason when rejecting the post"
+  "reject_reason_required": "You must provide a reason when rejecting the post",
+  "new_post_notification": "Author $author has just published a new post: \"$title\""
 }

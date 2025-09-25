@@ -14,5 +14,6 @@
   "update_failed": "Cập nhật bài viết thất bại",
   "approval_success": "Duyệt bài viết thành công",
   "reject_success": "Từ chối bài viết thành công",
-  "reject_reason_required": "Bạn phải cung cấp lý do khi từ chối bài viết"
+  "reject_reason_required": "Bạn phải cung cấp lý do khi từ chối bài viết",
+  "new_post_notification": "Tác giả %author% vừa đăng một bài viết mới: \"%title%\""
 }

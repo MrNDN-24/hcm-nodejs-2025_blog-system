@@ -103,4 +103,17 @@ export class FollowersService extends BaseI18nService {
       );
     }
   }
+
+  async getFollowersByAuthor(authorId: number): Promise<Follower[]> {
+    try {
+      return await this.followerRepo.find({
+        where: { author: { id: authorId } },
+        relations: ['user'],
+      });
+    } catch (error) {
+      throw new BadRequestException(
+        await this.t('followers.fetch_followers_failed'),
+      );
+    }
+  }
 }

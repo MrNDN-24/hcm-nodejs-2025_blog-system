@@ -10,5 +10,7 @@
   "manageUsers": "Manage Users",
   "managePosts": "Manage Posts",
 
-  "followedAuthors": "Followed Authors"
+  "followedAuthors": "Followed Authors",
+  "noNotifications": "No notifications",
+  "markAllAsRead": "Mark all as read"
 }

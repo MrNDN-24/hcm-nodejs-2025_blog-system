@@ -1,0 +1,7 @@
+{
+  "fetch_failed": "Lấy danh sách thông báo thất bại",
+  "not_found": "Không tìm thấy thông báo",
+  "update_failed": "Cập nhật thông báo thất bại",
+  "mark_all_as_read_success": "Tất cả thông báo đã được đánh dấu là đã đọc",
+  "update_all_failed": "Cập nhật tất cả thông báo thất bại"
+}

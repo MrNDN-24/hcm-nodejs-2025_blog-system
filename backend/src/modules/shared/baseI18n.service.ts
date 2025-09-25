@@ -1,4 +1,4 @@
-import { I18nService } from 'nestjs-i18n';
+import { I18nService, TranslateOptions } from 'nestjs-i18n';
 import { RequestI18nContextService } from '@/common/context/i18nContext.service';
 import { I18N_CONFIG } from '@/common/constants/i18n.constant';
 
@@ -12,7 +12,10 @@ export class BaseI18nService {
     return this.context.getLang() || I18N_CONFIG.fallbackLanguage;
   }
 
-  protected async t(key: string): Promise<string> {
-    return this.i18n.translate(key, { lang: this.lang }) as Promise<string>;
+  protected async t(key: string, options?: TranslateOptions): Promise<string> {
+    return this.i18n.translate(key, {
+      lang: this.lang,
+      ...options,
+    }) as Promise<string>;
   }
 }

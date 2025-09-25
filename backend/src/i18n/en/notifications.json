@@ -1,0 +1,7 @@
+{
+  "fetch_failed": "Failed to fetch notifications",
+  "not_found": "Notification not found",
+  "update_failed": "Failed to update notification",
+  "mark_all_as_read_success": "All notifications have been marked as read",
+  "update_all_failed": "Failed to update all notifications"
+}

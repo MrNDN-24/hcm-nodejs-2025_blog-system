@@ -10,5 +10,7 @@
   "manageUsers": "Quản lý người dùng",
   "managePosts": "Quản lý bài viết",
 
-  "followedAuthors": "Tác giả đã theo dõi"
+  "followedAuthors": "Tác giả đã theo dõi",
+  "noNotifications": "Không có thông báo",
+  "markAllAsRead": "Đánh dấu tất cả đã đọc"
 }
