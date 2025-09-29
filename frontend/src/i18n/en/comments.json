@@ -1,0 +1,12 @@
+{
+  "commentListTitle": "Comments",
+  "writeComment": "Write a comment...",
+  "send": "Send",
+  "noComments": "No comments yet",
+  "reply": "Reply",
+  "writeReply": "Write a reply...",
+  "cancel": "Cancel",
+  "postAuthor": "Post author",
+  "showReplies": "Hiển thị {{count}} phản hồi",
+  "hideReplies": "Ẩn phản hồi"
+}

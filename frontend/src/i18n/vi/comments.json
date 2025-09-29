@@ -1,0 +1,12 @@
+{
+  "commentListTitle": "Bình luận",
+  "writeComment": "Viết bình luận...",
+  "send": "Gửi",
+  "noComments": "Chưa có bình luận nào",
+  "reply": "Phản hồi",
+  "writeReply": "Viết phản hồi...",
+  "cancel": "Hủy",
+  "postAuthor": "Tác giả bài viết",
+  "showReplies": "Hiển thị {{count}} phản hồi",
+  "hideReplies": "Ẩn phản hồi"
+}

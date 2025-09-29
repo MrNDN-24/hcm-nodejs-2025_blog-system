@@ -159,7 +159,7 @@ const MainNavbar = () => {
         <div className="menu-right">
           <LanguageSwitcher />
 
-          {isLoggedIn && user?.role === "user" && (
+          {isLoggedIn && (user?.role === "user" || user?.role === "author") && (
             <Dropdown
               overlay={notificationMenu}
               trigger={["click"]}

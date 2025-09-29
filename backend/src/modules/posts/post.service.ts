@@ -339,4 +339,16 @@ export class PostService extends BaseI18nService {
       throw new InternalServerErrorException(await this.t('post.fetch_failed'));
     }
   }
+
+  async findPost(postId: number): Promise<Post> {
+    const post = await this.postRepo.findOne({
+      where: { id: postId, deletedAt: IsNull(), status: PostStatus.APPROVED },
+      relations: ['author', 'category', 'tags', 'author.user'],
+    });
+
+    if (!post) {
+      throw new NotFoundException(await this.t('post.not_found'));
+    }
+    return post;
+  }
 }

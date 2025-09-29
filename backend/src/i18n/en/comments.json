@@ -1,0 +1,9 @@
+{
+  "parent_not_found": "Parent comment not found",
+  "create_failed": "Failed to create comment",
+  "fetch_failed": "Failed to fetch comments",
+  "not_found": "Comment not found",
+  "update_failed": "Failed to update comment",
+  "delete_success": "Comment deleted successfully",
+  "delete_failed": "Failed to delete comment"
+}

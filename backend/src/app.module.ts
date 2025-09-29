@@ -30,6 +30,7 @@ import { CategoryModule } from './modules/categories/category.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { FollowersModule } from './modules/followers/follower.module';
 import { NotificationModule } from './modules/notifications/notify.module';
+import { CommentModule } from './modules/comments/comment.module';
 
 @Module({
   imports: [
@@ -62,7 +63,8 @@ import { NotificationModule } from './modules/notifications/notify.module';
     CategoryModule,
     AdminModule,
     FollowersModule,
-    NotificationModule
+    NotificationModule,
+    CommentModule
   ],
   controllers: [AppController],
   providers: [

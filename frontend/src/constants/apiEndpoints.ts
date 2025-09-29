@@ -41,8 +41,12 @@ export const ENDPOINTS = {
     GET_FOLLOWED_AUTHORS: "/v1/followers/user",
   },
   NOTIFICATIONS: {
-    LIST: "/v1/notifications",                       
-    MARK_AS_READ: (id: number) => `/v1/notifications/${id}/read`,  
-    MARK_ALL_AS_READ: "/v1/notifications/mark-all-read",           
+    LIST: "/v1/notifications",
+    MARK_AS_READ: (id: number) => `/v1/notifications/${id}/read`,
+    MARK_ALL_AS_READ: "/v1/notifications/mark-all-read",
+  },
+  COMMENTS: {
+    CREATE: "/v1/comments",
+    BY_POST: (postId: number) => `/v1/comments/post/${postId}`,
   },
 };

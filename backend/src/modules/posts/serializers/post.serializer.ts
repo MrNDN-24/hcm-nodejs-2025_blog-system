@@ -3,6 +3,7 @@ import { CategorySerializer } from '@/modules/categories/serializers/category.se
 import { TagSerializer } from '@/modules/tags/serializers/tag.serializer';
 import { AuthorSerializer } from '@/modules/authors/serializers/author.serializer';
 import { ApiProperty } from '@nestjs/swagger';
+import { CommentSerializer } from '@/modules/comments/serializers/comment.serializer';
 
 export class PostSerializer {
   @ApiProperty()
@@ -48,4 +49,9 @@ export class PostSerializer {
   @Expose()
   @Type(() => AuthorSerializer)
   author: AuthorSerializer;
+
+  @ApiProperty({ type: [CommentSerializer] })
+  @Expose()
+  @Type(() => CommentSerializer)
+  comments?: CommentSerializer[];
 }

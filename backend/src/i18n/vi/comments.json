@@ -1,0 +1,9 @@
+{
+  "parent_not_found": "Không tìm thấy bình luận cha",
+  "create_failed": "Tạo bình luận thất bại",
+  "fetch_failed": "Lấy danh sách bình luận thất bại",
+  "not_found": "Không tìm thấy bình luận",
+  "update_failed": "Cập nhật bình luận thất bại",
+  "delete_success": "Xóa bình luận thành công",
+  "delete_failed": "Xóa bình luận thất bại"
+}

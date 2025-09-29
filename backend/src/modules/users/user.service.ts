@@ -30,7 +30,7 @@ export class UserService extends BaseI18nService {
     super(i18n, Context);
   }
 
-  private async findUser(userId: number, withAuthor = false): Promise<User> {
+  async findUser(userId: number, withAuthor = false): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
       relations: withAuthor ? ['author'] : [],

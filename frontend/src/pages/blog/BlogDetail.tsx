@@ -7,6 +7,7 @@ import "../../styles/BlogDetail.css";
 import { useTranslation } from "react-i18next";
 import AuthorModal from "../../components/author/authorInfo";
 import { useAuthor } from "../../hooks/useAuthor";
+import CommentList from "../../components/comment/CommentList";
 
 const { Title, Paragraph } = Typography;
 
@@ -85,6 +86,13 @@ const BlogDetailPage = () => {
         />
       </Paragraph>
 
+      <div style={{ marginTop: 40 }}>
+        <CommentList
+          postId={postDetail.id}
+          postAuthorId={postDetail.author?.id}
+        />
+      </div>
+
       <AuthorModal
         open={authorModalVisible}
         loading={loading}
@@ -96,4 +104,3 @@ const BlogDetailPage = () => {
   );
 };
 export default BlogDetailPage;
-

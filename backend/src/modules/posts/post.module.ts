@@ -17,9 +17,10 @@ import { TagModule } from '../tags/tag.module';
     SharedModule,
     AuthorModule,
     CategoryModule,
-    TagModule
+    TagModule,
   ],
   providers: [PostService],
   controllers: [PostController],
+  exports: [PostService],
 })
 export class PostModule {}

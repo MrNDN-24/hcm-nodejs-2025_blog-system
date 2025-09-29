@@ -18,6 +18,7 @@ import viPostModal from "./vi/postModal.json";
 import viPost from "./vi/post.json";
 import vipostManagement from "./vi/postManagement.json";
 import viBlog from "./vi/blog.json";
+import viComment from "./vi/comments.json";
 
 //US
 import enRegister from "./en/register.json";
@@ -35,6 +36,7 @@ import enPostModal from "./en/postModal.json";
 import enPost from "./en/post.json";
 import enpostManagement from "./en/postManagement.json";
 import enBlog from "./en/blog.json";
+import enComment from "./en/comments.json";
 
 i18n
   .use(LanguageDetector)
@@ -57,6 +59,7 @@ i18n
         post: viPost,
         postManagement: vipostManagement,
         blog: viBlog,
+        comments: viComment,
       },
       en: {
         register: enRegister,
@@ -74,6 +77,7 @@ i18n
         post: enPost,
         postManagement: enpostManagement,
         blog: enBlog,
+        comments: enComment,
       },
     },
     fallbackLng: "vi",
@@ -93,6 +97,7 @@ i18n
       "post",
       "postManagement",
       "blog",
+      "comments",
     ],
 
     defaultNS: "common",
